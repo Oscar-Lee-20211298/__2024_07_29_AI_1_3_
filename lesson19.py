@@ -20,7 +20,7 @@ def parse_data(filename):
 
 def main():
     current_dir = os.getcwd()
-    csv_dir = os.path.join(current_dir,'每日各站進出站人數20190423-20231231')
+    csv_dir = os.path.join(current_dir,'每日各站進出站人數')
     files_and_dirs = os.listdir(csv_dir)
     all_csv_files = [filename for filename in files_and_dirs if '每日各站進出站人數' in filename]
     sorted_csv_files = sorted(all_csv_files)
@@ -32,6 +32,17 @@ def main():
     df_done1 = df_done.set_index('乘車日')
     print(df_done1.info())
 
+    # 取出所有基隆的資料
+    keelung_data = df_done1[df_done1['車站名稱'] == '基隆']
+
+    # 取出2021年所有台北車站的資料
+    taipei_2021_data = df_done1[(df_done1['車站名稱'] == '台北') & (df_done1.index.year == 2021)]
+
+    print("基隆的資料:")
+    print(keelung_data.info())
+
+    print("2021年台北車站的資料:")
+    print(taipei_2021_data.info())
 
 if __name__ == '__main__':
     main()
